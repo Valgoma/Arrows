@@ -11,22 +11,28 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(new File("INPUT.TXT"));
         String arrows = sc.next();
-        String obrazets1 = ">>-->";
-        String obrazets2 = "<--<<";
-        Pattern p = Pattern.compile(obrazets1);
-        Matcher m = p.matcher(arrows);
+        char[] mass =arrows.toCharArray();
         int i = 0;
-        while (m.find())
+        for (int k=0; k < arrows.length()-1; k++)
         {
-            i++;
+            if (mass[k] == '<')
+            {
+               System.out.println(k);
+               if (mass[k+1] == '-' && mass[k+2] == '-' && mass[k+3] == '<' && mass[k+4] == '<')
+               {
+                   System.out.println("YES");
+                   i++;
+               }
+            }
+            if (mass[k] == '>')
+            {
+                if (mass[k-1] == '-' && mass[k-2] == '-' && mass[k-3] == '>' && mass[k-4] == '>')
+                {
+                    System.out.println("YES");
+                    i++;
+                }
+            }
         }
-        Pattern p2 = Pattern.compile(obrazets2);
-        Matcher m2 = p.matcher(arrows);
-        while (m2.find())
-        {
-            i++;
-        }
-        System.out.println(i);
         String s = String.valueOf(i);
         Files.writeString(Path.of("OUTPUT.TXT"), s);
     }
